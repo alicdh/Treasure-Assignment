@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Aggie Island</title>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+	<!--feel free to embelish, but ensure you don't disrupt playability-->
+	<style>
+        body{
+			text-align:center;
+		}
+		img{
+			display: block;
+			margin: auto;
+		}
+	</style>
+</head>
+<body>
+    <h1 id="heading">Find the buried treasure!</h1>
+
+    <img id="map" width=800 height=600 src="https://ruinexplorer.github.io/Pirate-Map-USU-Campus.png">
+
+    <p id="distance">Click on the map to search for the Treasure!</p>
+
+    <script>
+        var treasureX = Math.random() * 800 + 1;
+        var treasureY = Math.random() * 600 + 1;
+        var treasureTotal = treasureX*treasureX + treasureY*treasureY;
+        var clickCounter = 0;
+        map.addEventListener("click", function(event) {
+          var x = event.pageX;
+          var y = event.pageY;
+          var distanceX = x - treasureX;
+          var distanceY = y - treasureY;
+          var distanceTotal = distanceX*distanceX + distanceY*distanceY;
+          var myDistance = document.getElementById("distance");
+          var percent = distanceTotal/treasureTotal;
+          if(clickCounter == 50) {
+            alert("You lost! You had " + clickCounter + " clicks! Game will reset and treasure will be relocated.");
+            treasureX = Math.random() * 800 + 1;
+            treasureY = Math.random() * 600 + 1;
+            clickCounter = 0;
+          }
+          if (percent <= .02) {
+            alert("You won with " + clickCounter + " clicks! Game will reset and treasure will be relocated.");
+            treasureX = Math.random() * 800 + 1;
+            treasureY = Math.random() * 600 + 1;
+            clickCounter = 0;
+          }else if (percent > .02 && percent <= .025) {
+            myDistance.innerHTML = "Boiling Hot! Your click count is: " + clickCounter;
+            ++clickCounter;
+          }else if (percent > .025 && percent <= .05) {
+            myDistance.innerHTML = "Really Hot! Your click count is: " + clickCounter;
+            ++clickCounter;
+          }else if (percent > .05 && percent <= .1) {
+            myDistance.innerHTML = "Hot! Your click count is: " + clickCounter;
+            ++clickCounter;
+          }else if (percent > .1 && percent <= .2) {
+            myDistance.innerHTML = "Warm! Your click count is: " + clickCounter;
+            ++clickCounter;
+          }else if (percent > .2 && percent <= .4) {
+            myDistance.innerHTML = "Cold! Your click count is: " + clickCounter;
+            ++clickCounter;
+          }else if (percent > .4 && percent <= .8 ) {
+            myDistance.innerHTML = "Really Cold! Your click count is: " + clickCounter;
+            ++clickCounter;
+          }else {
+            myDistance.innerHTML = "Freezing! Your click count is: " + clickCounter;
+            ++clickCounter;
+          }
+        }, true);
+    </script>
+</body>
+</html>
